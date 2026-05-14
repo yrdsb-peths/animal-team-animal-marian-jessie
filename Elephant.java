@@ -13,16 +13,17 @@ public class Elephant extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     
-    GreenfootSound elephantSound new GreenfootSound
+    GreenfootSound elephantSound = new GreenfootSound("elephant_sound.mp3");
+    
     public void act()
     {
         if(Greenfoot.isKeyDown("left"))
         {
-            move(-1);
+            move(-2);
         }
         else if(Greenfoot.isKeyDown("right"))
         {
-            move(1);
+            move(2);
         }
         
         eat();
@@ -36,6 +37,7 @@ public class Elephant extends Actor
             MyWorld world = (MyWorld) getWorld();
             world.createApple();
             world.increaseScore();
+            elephantSound.play();
         }
     }
 }
