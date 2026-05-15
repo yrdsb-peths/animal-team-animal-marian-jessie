@@ -15,23 +15,30 @@ public class Apple extends Actor
     int speed = 1;
     public void act()
     {
-        int x = getX();
-        int y = getY() + speed;
-        setLocation(x, y);
-        
-        //Remove apple and draw game over when apple gets to bottom
-        
-        //Remove apple and draw over when apple gets to bottom
+        fall();
+    }
+    
+    public void fall()
+    {
+        setLocation(getX(), getY() + speed);
         MyWorld world = (MyWorld) getWorld();
+        
         if(getY() >= world.getHeight())
         {
-            world.gameOver();
             world.removeObject(this);
+            world.loseLife();
         }
     }
     
     public void setSpeed(int spd)
     {
-        speed = spd;
+        if(spd > 6)
+        {
+            speed = 6;
+        }
+        else
+        {
+            speed = spd;
+        }
     }
 }
