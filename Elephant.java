@@ -20,6 +20,12 @@ public class Elephant extends Actor
     String facing = "right";
     SimpleTimer animationTimer = new SimpleTimer();
     
+    int moveSpeed = 2;
+    int dashCounter = 0;
+    
+    boolean dashing = false;
+ 
+    
     public Elephant()
     {
         for(int i = 0; i < idleRight.length; i++)
@@ -36,8 +42,10 @@ public class Elephant extends Actor
             idleLeft[i].scale(100, 100);
         }
         
-        animationTimer.mark();
+
         setImage(idleRight[0]);
+        animationTimer.mark();
+ 
     }
     
     int imageIndex = 0;
@@ -52,12 +60,18 @@ public class Elephant extends Actor
         if(facing.equals("right"))
         {
             setImage(idleRight[imageIndex]);
-            imageIndex = (imageIndex + 1) % idleRight.length;
+
         }
         else
         {
             setImage(idleLeft[imageIndex]);
-            imageIndex = (imageIndex + 1) % idleLeft.length;
+
+        }
+        
+        imageIndex++;
+        if(imageIndex >= idleRight.length)
+        {
+            imageIndex = 0;
         }
         
     }
@@ -81,6 +95,42 @@ public class Elephant extends Actor
         //Animate the elephant
         animateElephant();
     }
+    
+    public void movement()
+    {
+        if(Greenfoot.isKeyDown("left"))
+        {
+            setLocation(getX() - moveSpeed, getY());
+            facing = "left";
+        }
+        if(Greenfoot.isKeyDown("right"))
+        {
+            setLocation(getX() + moveSpeed, getY());
+            facing = "right";
+        }
+    }
+    
+    public void control()
+    {
+        if(Greenfoot.isKeyDown("shift") && !dashing)
+        {
+            moveSpeed = 5;
+            dashing = true;
+            dashCounter = 120;
+        }
+        
+        if(dashing)
+        {
+            dashCounter--;
+            
+            if(dashCounter <= 0)
+            {
+                moveSpeed = 2;
+                dashing = false;
+            }
+        }
+    }
+    
     
     public void eat()
     {
