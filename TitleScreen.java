@@ -48,5 +48,8 @@ public class TitleScreen extends World
         addObject(label2,255,304);
         label2.setLocation(379,307);
         label2.setLocation(298,303);
+        Label label3 = new Label("press 'shift' to speed up", 30);
+        addObject(label3,231,374);
+        label3.setLocation(318,354);
     }
 }
