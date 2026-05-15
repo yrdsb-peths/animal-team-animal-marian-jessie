@@ -3,8 +3,14 @@ import greenfoot.*;
 public class MyWorld extends World {
     public int score = 0;
     Label scoreLabel;
+    int level = 1;
+    
     public MyWorld() {
         super(600, 400, 1, false);
+        
+        GreenfootImage bg = new GreenfootImage("background2.jpg");
+        bg.scale(getWidth(), getHeight());
+        setBackground(bg);
         
         //Create the elephant object
         Elephant elephant = new Elephant();
@@ -14,7 +20,7 @@ public class MyWorld extends World {
         scoreLabel = new Label(0,80);
         addObject(scoreLabel, 50, 50);
         
-        createApple();
+        spawnApple();
     }
     
     /**
@@ -24,7 +30,6 @@ public class MyWorld extends World {
     {
         Label gameOverLabel = new Label("Game Over", 100);
         addObject(gameOverLabel, 300, 200);
-        Greenfoot.stop();
     }
     /**
      * Increase score
@@ -34,15 +39,21 @@ public class MyWorld extends World {
         score++;
         scoreLabel.setValue(score);
         
+        if(score % 5 == 0)
+        {
+            level += 1;
+        }
     }
 
     /**
      * create a new apple at random location at the top of screen
      */
-    public void createApple()
+    public void spawnApple()
     {
         Apple apple = new Apple();
+        apple.setSpeed(level);
         int x = Greenfoot.getRandomNumber(600);
+        int y = 0;
         addObject(apple, x, 0);
     }
 }
