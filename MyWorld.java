@@ -5,6 +5,9 @@ public class MyWorld extends World {
     Label scoreLabel;
     int level = 1;
     
+    int lives = 3;
+    Label livesLabel;
+    
     public MyWorld() {
         super(600, 400, 1, false);
         
@@ -20,30 +23,50 @@ public class MyWorld extends World {
         scoreLabel = new Label(0,80);
         addObject(scoreLabel, 50, 50);
         
+        livesLabel = new Label("Lives: 3", 40);
+        addObject(livesLabel, 500, 40);
         spawnApple();
     }
     
     /**
      * End the game and draw 'Game Over'
      */
-    public void gameOver()
-    {
-        Label gameOverLabel = new Label("Game Over", 100);
-        addObject(gameOverLabel, 300, 200);
-    }
-    /**
-     * Increase score
-     */
     public void increaseScore()
     {
         score++;
         scoreLabel.setValue(score);
         
-        if(score % 5 == 0)
+        if(score % 3 == 0)
         {
-            level += 1;
+            level++;
         }
     }
+    
+    public void loseLife()
+    {
+        lives--;
+        livesLabel.setValue("Lives: " + lives);
+        
+        if(lives <= 0)
+        {
+            gameOver();
+        }
+        else
+        {
+            spawnApple();
+        }
+    }
+    public void gameOver()
+    {
+        Label gameOverLabel = new Label("Game Over", 100);
+        addObject(gameOverLabel, 300, 200);
+        
+        Greenfoot.stop();
+    }
+    /**
+     * Increase score
+     */
+
 
     /**
      * create a new apple at random location at the top of screen
